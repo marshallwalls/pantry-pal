@@ -22,7 +22,7 @@ class ItemController extends Controller
         $items = auth()->user()
             ->items()
             ->latest()
-            ->pagination(10);
+            ->paginate(10);
         
         return view('items.index', compact('items'));
     }
@@ -114,6 +114,6 @@ class ItemController extends Controller
 
         return redirect()
             ->route('items.index')
-            ->with('success', 'Item deleted.')
+            ->with('success', 'Item deleted.');
     }
 }
