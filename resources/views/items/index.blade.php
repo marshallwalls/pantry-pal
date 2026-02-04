@@ -17,8 +17,10 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Quantity</th>
+                    <th>Location</th>
                     <th>Status</th>
-                    <th>Created</th>
+                    <th>Added</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -27,10 +29,12 @@
                 @foreach ($items as $item)
                     <tr>
                         <td>{{ $item->name }}</td>
+                        <td>{{ $item->quantity }}</td>
+                        <td>{{ ucfirst($item->location) }}</td>
                         <td>{{ ucfirst($item->status) }}</td>
                         <td>{{ $item->created_at->diffForHumans() }}</td>
                         <td>
-                            <a href="{{ route('items.edit', $item) }}">Edit</a>
+                            <a href="{{ route('items.edit', $item) }}">Edit</a> 
 
                             <form method="POST"
                                 action="{{ route('items.destroy', $item) }}"

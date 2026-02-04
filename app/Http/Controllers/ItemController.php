@@ -46,9 +46,11 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'status' => 'required|in:pending,active,archived',
+            'name' => 'required|string|max:191',
+            'quantity' => 'required|integer|min:0',
+            'location' => 'required|in:pantry,fridge,freezer',
+            'expiration_date' => 'nullable|date',
+            'notes' => 'nullable|string|max:1000',
         ]);
 
         auth()->user()->items()->create($validated);
@@ -77,6 +79,8 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
+        $this->authorize('update', $item);
+        
         return view('items.edit', compact('item'));
     }
 
@@ -89,10 +93,14 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
+        $this->authorize('update', $item);
+
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'status' => 'required|in:pending,active,archived',
+            'name' => 'required|string|max:191',
+            'quantity' => 'required|integer|min:0',
+            'location' => 'required|in:pantry,fridge,freezer',
+            'expiration_date' => 'nullable|date',
+            'notes' => 'nullable|string|max:1000',
         ]);
 
         $item->update($validated);

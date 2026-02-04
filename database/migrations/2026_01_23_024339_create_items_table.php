@@ -18,7 +18,7 @@ class CreateItemsTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->integer('quantity')->default(0);
-            $table->string('location');
+            $table->string('location')->nullable();
             $table->date('expiration_date')->nullable();
             $table->text('notes')->nullable();
             $table->softDeletes();
