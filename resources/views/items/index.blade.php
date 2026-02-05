@@ -19,7 +19,7 @@
                     <th>Name</th>
                     <th>Quantity</th>
                     <th>Location</th>
-                    <th>Status</th>
+                    <th>Expires</th>
                     <th>Added</th>
                     <th>Actions</th>
                 </tr>
@@ -31,7 +31,7 @@
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->quantity }}</td>
                         <td>{{ ucfirst($item->location) }}</td>
-                        <td>{{ ucfirst($item->status) }}</td>
+                        <td>{{ $item->expiration_date }}</td>
                         <td>{{ $item->created_at->diffForHumans() }}</td>
                         <td>
                             <a href="{{ route('items.edit', $item) }}">Edit</a> 

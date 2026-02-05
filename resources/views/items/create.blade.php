@@ -8,6 +8,7 @@
     <form method="POST" action="{{ route('items.store') }}">
         @csrf
 
+        <!-- Name -->
         <div>
             <label for="name">Name</label>
             <input
@@ -23,34 +24,67 @@
             @enderror
         </div>
 
+        <!-- Quantity -->
         <div>
-            <label for="description">Description</label>
-            <textarea
-                name="description"
-                id="description"
-            >{{ old('description') }}</textarea>
+            <label for="quantity">Quantity</label>
+            <input
+                type="number"
+                name="quantity"
+                id="quantity"
+                value="{{ old('quantity', 1) }}"
+                min="0"
+                required
+            >
 
-            @error('description')
+            @error('quantity')
                 <p>{{ $message }}</p>
             @enderror
         </div>
 
+        <!-- Location -->
         <div>
-            <label for="status">Status</label>
-            <select name="status" id="status" required>
-                <option value="">Choose status</option>
-                <option value="pending" @selected(old('status') === 'pending')>
-                    Pending
+            <label for="location">Location</label>
+            <select name="location" id="location" required>
+                <option value="pantry" @selected(old('location') === 'pantry')>
+                    Pantry
                 </option>
-                <option value="active" @selected(old('status') === 'active')>
-                    Active
+                <option value="fridge" @selected(old('location') === 'fridge')>
+                    Fridge
                 </option>
-                <option value="archived" @selected(old('status') === 'archived')>
-                    Archived
+                <option value="freezer" @selected(old('location') === 'freezer')>
+                    Freezer
                 </option>
             </select>
 
-            @error('status')
+            @error('location')
+                <p>{{ $message }}</p>
+            @enderror
+        </div>
+
+        <!-- Expiration Date -->
+        <div>
+            <label for="expiration_date">Expiration Date</label>
+            <input
+                type="date"
+                name="expiration_date"
+                id="expiration_date"
+                value="{{ old('expiration_date', now()->addDays(30)->toDateString()) }}"
+            >
+
+            @error('expiration_date')
+                <p>{{ $message }}</p>
+            @enderror
+        </div>
+
+        <!-- Notes -->
+        <div>
+            <label for="notes">Notes</label>
+            <textarea
+                name="notes"
+                id="notes"
+            >{{ old('notes') }}</textarea>
+
+            @error('notes')
                 <p>{{ $message }}</p>
             @enderror
         </div>

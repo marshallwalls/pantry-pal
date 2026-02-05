@@ -17,12 +17,20 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = auth()->user()
-            ->items()
-            ->latest()
-            ->paginate(10);
+        $query = auth()->user()->items();
+
+        // Filter by location (pantry / fridge / freezer)
+        if ($request->filled('location')) {
+            $query->where('location', $request->location);
+        }
+
+        $items = $query
+            ->orderByRaw('expiration_date IS NULL')
+            ->orderBy('expiration_date')
+            ->paginate(10)
+            ->withQueryString();
         
         return view('items.index', compact('items'));
     }
