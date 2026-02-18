@@ -78,7 +78,7 @@ dd('update hit');
             <input
                 type="date"
                 name="expiration_date"
-                value="{{ old('expiration_date', $item->expiration_date) }}"
+                value="{{ old('expiration_date', $item->expiration_date ? $item->expiration_date->format('Y-m-d') : '') }}"
                 class="w-full border rounded px-3 py-2"
             >
         </div>

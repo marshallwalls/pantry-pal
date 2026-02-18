@@ -27,11 +27,34 @@
 
             <tbody>
                 @foreach ($items as $item)
-                    <tr>
+                
+                    @php
+                        $isExpired = $item->expiration_date &&
+                            $item->expiration_date->isPast();
+
+                        $isExpiringSoon = $item->expiration_date &&
+                            !$isExpired &&
+                            $item->expiration_date->between(
+                                now(),
+                                now()->addDays(7)
+                            );
+                    @endphp
+
+                    <tr
+                        @if($isExpired)
+                            style="background-color: #fee2e2; color: #b91c1c;"
+                        @elseif($isExpiringSoon)
+                            style="background-color: #fef9c3;"
+                        @endif
+                    >
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->quantity }}</td>
                         <td>{{ ucfirst($item->location) }}</td>
-                        <td>{{ $item->expiration_date }}</td>
+                        <td>
+                            {{ $item->expiration_date
+                                ? $item->expiration_date->format('Y-m-d')
+                                : '—' }}
+                        </td>
                         <td>{{ $item->created_at->diffForHumans() }}</td>
                         <td>
                             <a href="{{ route('items.edit', $item) }}">Edit</a> 
